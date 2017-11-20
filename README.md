@@ -10,3 +10,4 @@ stupid version of hexdump in ~50 lines
 | d . ! ! ! | 100 009 033 033 033 | 144 011 041 041 041 | 64 09 21 21 21 |
 
 ```
+###### Copyright © 2017, [Manu-sh](https://github.com/Manu-sh), s3gmentationfault@gmail.com. Released under the [GPL3 license](LICENSE).
