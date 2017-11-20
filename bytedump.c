@@ -23,7 +23,7 @@ typedef enum _display_as { ASCII, INT, OCT, HEX } DisplayAs;
 */
 
 // return the byte readed (as size, not index), 0 if an error is occurred
-static inline int displayLine(char *buf, int size, DisplayAs as, FILE *stream) {
+static inline int displayChunk(char *buf, int size, DisplayAs as, FILE *stream) {
 
 	unsigned char c = 0;
 	int i = 0;
@@ -55,10 +55,10 @@ int main() {
 	while ((rb = fread(buf, 1, BSIZE, STREAM_READ)) != 0) {
 		for (int i = 0, n; i < rb; i+=5) {
 			n = (5 > rb-i ? rb-i : 5); fprintf(STREAM_WRITE, "| ");
-			displayLine(buf+i, n, ASCII, STREAM_WRITE), fprintf(STREAM_WRITE, "| ");
-			displayLine(buf+i, n, INT,   STREAM_WRITE), fprintf(STREAM_WRITE, "| ");
-			displayLine(buf+i, n, OCT,   STREAM_WRITE), fprintf(STREAM_WRITE, "| ");
-			displayLine(buf+i, n, HEX,   STREAM_WRITE), fprintf(STREAM_WRITE, "|\n");
+			displayChunk(buf+i, n, ASCII, STREAM_WRITE), fprintf(STREAM_WRITE, "| ");
+			displayChunk(buf+i, n, INT,   STREAM_WRITE), fprintf(STREAM_WRITE, "| ");
+			displayChunk(buf+i, n, OCT,   STREAM_WRITE), fprintf(STREAM_WRITE, "| ");
+			displayChunk(buf+i, n, HEX,   STREAM_WRITE), fprintf(STREAM_WRITE, "|\n");
 		}
 	}
 
