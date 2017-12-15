@@ -8,7 +8,7 @@
 #define STREAM_READ stdin
 #define STREAM_WRITE stdout
 
-typedef enum _display_as { ASCII, INT, OCT, HEX } DisplayAs;
+typedef enum { ASCII, INT, OCT, HEX } DisplayAs;
 
 /*
    all these calls to printf cause a little bit of overhead 
@@ -23,7 +23,7 @@ typedef enum _display_as { ASCII, INT, OCT, HEX } DisplayAs;
 */
 
 // return the byte readed (as size, not index), 0 if an error is occurred
-static inline int displayChunk(char *buf, int size, DisplayAs as, FILE *stream) {
+static inline int displayChunk(const char *buf, int size, DisplayAs as, FILE *stream) {
 
 	unsigned char c = 0;
 	int i = 0;
