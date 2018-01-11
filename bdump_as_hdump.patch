@@ -1,0 +1,51 @@
+diff --git a/bytedump.c b/bytedump.c
+index cf476ae..c1f9361 100644
+--- a/bytedump.c
++++ b/bytedump.c
+@@ -31,7 +31,7 @@ static inline int displayChunk(const char *buf, int size, DisplayAs as, FILE *st
+ 
+ 	switch (as) {
+ 		case ASCII:
+-			while (i < size) fprintf(stream, "%c ", (isgraph((c = buf[i++])) ? c : '.'));
++			while (i < size) fprintf(stream, "%c", (isgraph((c = buf[i++])) ? c : '.'));
+ 			break;
+ 		case INT:
+ 			while (i < size) fprintf(stream, "%03d ", (c = buf[i++]));
+@@ -52,25 +52,21 @@ int main() {
+ 	char buf[BSIZE];
+ 	int rb;
+ 
+-	fprintf(STREAM_WRITE, "| ASCII     | INT %17c OCT %17c HEX %12c\n", '|', '|', '|');
+ 	while ((rb = fread(buf, 1, BSIZE, STREAM_READ)) != 0) {
+-		for (int i = 0, n; i < rb; i+=5) {
+-			n = (5 > rb-i ? rb-i : 5); fprintf(STREAM_WRITE, "| ");
++		for (int i = 0, n; i < rb; i+=16) {
++			n = (16 > rb-i ? rb-i : 16);
+ 
++			fprintf(STREAM_WRITE, "%08x  ", i+n);
++			displayChunk(buf+i, n >> 1, HEX,   STREAM_WRITE);
++			for (int j = n >> 1; j < 8; j++) fprintf(STREAM_WRITE, "%-3s", "  ");
++
++			fprintf(STREAM_WRITE, " ");
++			displayChunk(buf+i+(n >> 1), n >> 1, HEX,   STREAM_WRITE);
++			for (int j = n >> 1; j < 8; j++) fprintf(STREAM_WRITE, "%-3s", "  ");
++
++			fprintf(STREAM_WRITE, "|");
+ 			displayChunk(buf+i, n, ASCII, STREAM_WRITE);
+-			for (int j = n; j < 5; j++) fprintf(STREAM_WRITE, "%-2c", ' '); /* padding */
+-			fprintf(STREAM_WRITE, "| ");
+-
+-			displayChunk(buf+i, n, INT,   STREAM_WRITE);
+-			for (int j = n; j < 5; j++) fprintf(STREAM_WRITE, "%-4c", ' ');
+-			fprintf(STREAM_WRITE, "| ");
+-			
+-			displayChunk(buf+i, n, OCT,   STREAM_WRITE);
+-			for (int j = n; j < 5; j++) fprintf(STREAM_WRITE, "%-4c", ' ');
+-			fprintf(STREAM_WRITE, "| ");
+-
+-			displayChunk(buf+i, n, HEX,   STREAM_WRITE);
+-			for (int j = n; j < 5; j++) fprintf(STREAM_WRITE, "%-3c", ' ');
++			for (int j = n; j < 16; j++) fprintf(STREAM_WRITE, "%c", ' '); /* padding */
+ 			fprintf(STREAM_WRITE, "|\n");
+ 		}
+ 	}
