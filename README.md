@@ -1,4 +1,4 @@
-# ByteDump
+# byte_dump
 stupid version of hexdump in ~50 lines
 
 
