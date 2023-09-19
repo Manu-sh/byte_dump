@@ -1,5 +1,5 @@
 CC=cc
-CFLAGS=-O3 -Wall -ffast-math -std=c99
+CFLAGS=-O3 -Wall -ffast-math -std=c99 #-march=native -mtune=native
 .PHONY: all clean
 
 all:
