@@ -11,6 +11,13 @@ stupid version of hexdump in ~50 lines
 
 ```
 
+
+```bash
+# to dump a file
+~> ./bytedump < /path/yourfile
+```
+
+
  added patch to make it more similar to `hexdump -C`:
  
  ```bash
